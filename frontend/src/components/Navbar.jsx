@@ -38,16 +38,13 @@ const Navbar = () => {
             />
             {/* Text Right Side of Logo */}
             <div className="hidden sm:block">
-              <h1 className="font-serif text-lg md:text-xl font-bold text-primary-800 dark:text-white leading-tight">
-                Lawyers Management System
-              </h1>
+              <h1 className="text-xl font-bold text-primary-800 dark:text-white">{t('lawyersManagementSystem')}</h1>
               <p className="text-xs text-gray-600 dark:text-gray-400 font-medium tracking-wide">
                 LMS
               </p>
             </div>
           </Link>
 
-          {/* Desktop Menu - CENTER */}
           {/* Desktop Menu - CENTER */}
 <div className="hidden xl:flex items-center gap-1">
   {navLinks.map((link) => (

@@ -56,14 +56,20 @@ const Home = () => {
           <div className="absolute top-0 right-0 w-1/2 h-full bg-accent-500/10 rounded-l-full blur-3xl"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="font-serif text-4xl md:text-6xl font-bold leading-tight mb-6">
-                {t('heroTitle')} <br />
-                <span className="text-accent-400">{t('heroSubtitle')}</span>
-              </h1>
-              <p className="text-lg text-gray-200 mb-8 max-w-lg">
-                {t('heroDesc')}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              
+              {/* ✅ UPDATED HERO TEXT HIERARCHY */}
+              <h1 className="font-serif text-4xl md:text-6xl font-bold leading-tight mb-2">
+  {t('heroTitle')}
+</h1>
+<h2 className="font-serif text-2xl md:text-4xl font-bold text-accent-400 mb-2">
+  {t('firmName')}
+</h2>
+<h3 className="font-serif text-base md:text-xl text-gray-300 mb-6 font-medium">
+  {t('advocateTitle')}
+</h3>
+
+{/* ✅ Paragraph delete ho gaya, ab seedha buttons hain 👇 */}
+<div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/login" className="px-8 py-4 bg-accent-500 hover:bg-accent-600 text-gray-900 font-bold rounded-lg shadow-lg hover:shadow-accent-500/50 transition-all flex items-center justify-center gap-2">
                   {t('bookAppointment')} <FaCalendarAlt />
                 </Link>
@@ -72,6 +78,7 @@ const Home = () => {
                 </Link>
               </div>
             </div>
+            
             <div className="hidden lg:block">
               <img src={heroImage} alt="LMS Professional Office" className="rounded-2xl shadow-2xl border-4 border-white/10 w-full object-cover" />
             </div>
@@ -216,7 +223,7 @@ const Home = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white mb-1">{t('ourOffice')}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">123 Justice Avenue, Suite 400<br />Karachi, Sindh, Pakistan</p>
+                    <p className="text-gray-600 dark:text-gray-400">Office No. 3 Behind DIALDAS Club, Near High Court of Sindh, Hyderabad</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -225,7 +232,7 @@ const Home = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white mb-1">{t('phone')}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">+92 300 1234567</p>
+                    <p className="text-gray-600 dark:text-gray-400">0301-3504227</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -234,7 +241,7 @@ const Home = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white mb-1">{t('email')}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">contact@lexilaw.com</p>
+                    <p className="text-gray-600 dark:text-gray-400">contact@meerahmedmangrio.com</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">

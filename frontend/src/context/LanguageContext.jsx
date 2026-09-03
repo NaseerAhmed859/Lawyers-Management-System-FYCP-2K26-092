@@ -23,7 +23,7 @@ export const LanguageProvider = ({ children }) => {
       newCaseFile: 'New Case File', activeFilters: 'Active Filters', type: 'Type', noHearingsFound: 'No hearings found matching your filters.', clearAllFilters: 'Clear all filters',
       calendarView: 'Calendar View', comingSoon: 'Interactive calendar coming soon...',
       // Home Page
-      heroTitle: 'Professional Legal Services', heroSubtitle: 'You Can Trust', heroDesc: 'Empowering you with expert legal guidance, transparent case tracking, and dedicated representation for all your legal matters.',
+      heroTitle: 'Lawyers Management System', heroSubtitle: 'MEER AHMED MANGRIO & ASSOCIATES', heroDesc:  'Advocate Supreme Court',
       bookAppointment: 'Book Appointment', meetOurLawyers: 'Meet Our Lawyers', aboutOurFirm: 'About Our Firm', learnMore: 'Learn More About Us',
       ourLegalServices: 'Our Legal Services', servicesDesc: 'Comprehensive legal solutions tailored to protect your rights and interests.',
       ourLawyers: 'Meet Our Expert Lawyers', lawyersDesc: 'Dedicated professionals ready to fight for your justice.', viewProfile: 'View Profile', viewAllLawyers: 'View All Lawyers',
@@ -102,6 +102,11 @@ familyLaw: 'Family Law',
 corporateLaw: 'Corporate Law',
 propertyLaw: 'Property Law',
 constitutionalLaw: 'Constitutional Law',
+heroTitle: 'Lawyers Management System',
+firmName: 'MEER AHMED MANGRIO & ASSOCIATES',
+advocateTitle: 'Advocate Supreme Court',
+heroDesc: 'Empowering you with expert legal guidance, transparent case tracking, and dedicated representation for all your legal matters.',
+lawyersManagementSystem: 'Lawyers Management System',
 },
     ur: {
       // Navbar & Common
@@ -192,6 +197,10 @@ familyLaw: 'خاندانی قانون',
 corporateLaw: 'کارپوریٹ قانون',
 propertyLaw: 'جائیداد کا قانون',
 constitutionalLaw: 'آئینی قانون',
+heroTitle: 'لائیرز مینجمنٹ سسٹم',
+firmName: 'میر احمد منگریو اینڈ اسوسی ایٹس',
+advocateTitle: 'ایڈووکیٹ سپریم کورٹ',
+lawyersManagementSystem: 'لائیرز مینجمنٹ سسٹم',
 },
     ar: {
       // Arabic translations (Shortened for space, but structure is identical to Urdu)
@@ -214,8 +223,12 @@ teamMembersCount: '12 عضوًا في الفريق',
 practiceAreas: 'مجالات الممارسة',
 needLegalAssistance: 'هل تحتاج إلى مساعدة قانونية؟',
 callSeniorPartner: 'اتصل بالشريك الأول',
-contactTeam: 'اتصل بالفريق'
-    }
+contactTeam: 'اتصل بالفريق',
+heroTitle: 'نظام إدارة المحامين',
+firmName: 'مير أحمد منغريو وشركاؤه',
+advocateTitle: 'محامي المحكمة العليا',
+lawyersManagementSystem: 'نظام إدارة المحامين',
+}
   };
 
   const t = (key) => translations[currentLang][key] || key;
