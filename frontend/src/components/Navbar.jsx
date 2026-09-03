@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import {NavLink, Link, } from 'react-router-dom';
 import { FaMoon, FaSun, FaBars, FaTimes } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -48,17 +48,24 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Menu - CENTER */}
-          <div className="hidden xl:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-gray-800 rounded-md transition-all duration-200"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
+          {/* Desktop Menu - CENTER */}
+<div className="hidden xl:flex items-center gap-1">
+  {navLinks.map((link) => (
+    <NavLink
+      key={link.path}
+      to={link.path}
+      className={({ isActive }) =>
+        `px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+          isActive
+            ? 'text-primary-700 dark:text-accent-400 font-bold border-b-2 border-primary-700 dark:border-accent-400'
+            : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-accent-400 hover:bg-primary-50 dark:hover:bg-gray-800'
+        }`
+      }
+    >
+      {link.name}
+    </NavLink>
+  ))}
+</div>
 
           {/* Right Side - Language + Dark Mode + Login Button */}
           <div className="hidden xl:flex items-center gap-3">

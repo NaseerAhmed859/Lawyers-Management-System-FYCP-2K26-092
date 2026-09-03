@@ -1,40 +1,71 @@
-import { FaBalanceScale, FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { FaBalanceScale, FaFacebook, FaTwitter, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-12">
+    <footer className="bg-primary-900 text-white pt-12 pb-6 border-t-4 border-accent-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <FaBalanceScale className="text-2xl text-primary-700 dark:text-accent-500" />
-              <span className="font-serif text-2xl font-bold text-primary-800 dark:text-white">LexiLaw</span>
+        
+        {/* Top Section: 3 Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 border-b border-primary-700 pb-8">
+          
+          {/* Brand & Name */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <FaBalanceScale className="text-3xl text-accent-400" />
+              <h3 className="text-xl font-bold font-serif text-white">Lawyers Management System</h3>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 max-w-md">
-              Empowering lawyers and clients with a modern, secure, and AI-driven case management ecosystem.
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Empowering you with expert legal guidance, transparent case tracking, and dedicated representation for all your legal matters.
             </p>
           </div>
-          
+
+          {/* Quick Links */}
           <div>
-            <h4 className="font-bold text-lg mb-4 text-gray-800 dark:text-white">Quick Links</h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-accent-400">Practice Areas</a></li>
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-accent-400">Our Team</a></li>
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-accent-400">Contact Us</a></li>
+            <h4 className="text-lg font-bold mb-4 text-accent-400">Quick Links</h4>
+            <ul className="space-y-2 text-gray-300 text-sm">
+              <li><Link to="/" className="hover:text-accent-400 transition-colors">Home</Link></li>
+              <li><Link to="/about" className="hover:text-accent-400 transition-colors">About Us</Link></li>
+              <li><Link to="/practice-areas" className="hover:text-accent-400 transition-colors">Practice Areas</Link></li>
+              <li><Link to="/teams" className="hover:text-accent-400 transition-colors">Teams</Link></li>
+              <li><Link to="/contact" className="hover:text-accent-400 transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
+          {/* Contact Info */}
           <div>
-            <h4 className="font-bold text-lg mb-4 text-gray-800 dark:text-white">Connect</h4>
-            <div className="flex space-x-4">
-              <a href="#" className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-primary-600 hover:text-white transition"><FaFacebook /></a>
-              <a href="#" className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-primary-600 hover:text-white transition"><FaTwitter /></a>
-              <a href="#" className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-primary-600 hover:text-white transition"><FaLinkedin /></a>
-            </div>
+            <h4 className="text-lg font-bold mb-4 text-accent-400">Contact Info</h4>
+            <ul className="space-y-3 text-gray-300 text-sm">
+              <li className="flex items-start gap-2">
+                <FaMapMarkerAlt className="text-accent-400 mt-1 flex-shrink-0" />
+                <span>Office No. 3 Behind DIALDAS Club, Near High Court of Sindh, Hyderabad</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <FaPhone className="text-accent-400 flex-shrink-0" />
+                <span>0301-3504227</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <FaEnvelope className="text-accent-400 flex-shrink-0" />
+                <span>contact@meerahmedmangrio.com</span>
+              </li>
+            </ul>
           </div>
         </div>
-        <div className="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center text-gray-500 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} LexiLaw. All rights reserved.
+
+        {/* Bottom Section: Copyright */}
+        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left text-sm text-gray-400">
+          
+          <p>
+            © {new Date().getFullYear()} <span className="text-accent-400 font-semibold">Lawyers Management System</span>. 
+            All rights reserved in FYCP/2K26/092.
+          </p>
+
+          {/* Social Icons */}
+          <div className="flex gap-4 mt-4 md:mt-0">
+            <a href="#" className="text-gray-400 hover:text-accent-400 transition-colors"><FaFacebook size={18} /></a>
+            <a href="#" className="text-gray-400 hover:text-accent-400 transition-colors"><FaTwitter size={18} /></a>
+            <a href="#" className="text-gray-400 hover:text-accent-400 transition-colors"><FaLinkedin size={18} /></a>
+          </div>
         </div>
       </div>
     </footer>

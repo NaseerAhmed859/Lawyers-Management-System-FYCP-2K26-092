@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import CaseDiary from './pages/CaseDiary';
 import AddCase from './pages/AddCase';
 import Teams from './pages/Teams';
+import Contact from './pages/Contact';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -33,6 +34,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/practice-areas" element={<PracticeAreas />} />
               <Route path="/teams" element={<Teams />} /> 
+              <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/dashboard" element={<ProtectedRoute><LawyerDashboard /></ProtectedRoute>} />

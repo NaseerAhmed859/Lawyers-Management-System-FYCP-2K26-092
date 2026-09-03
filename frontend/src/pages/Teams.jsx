@@ -16,19 +16,23 @@ const Teams = () => {
   };
 
   const teamMembers = [
-    { name: 'IRFAN ALI RAHUJO', title: 'Advocate High Court', cell: '0346-2988615', specialization: 'Criminal & Civil Law' },
-    { name: 'ZAFAR ALI CHANDIO', title: 'Advocate High Court', cell: '0302-3058857', specialization: 'Constitutional Law' },
-    { name: 'IRFAN ALI KHASKHELI', title: 'Advocate High Court', cell: '0345-3655361', specialization: 'Corporate Law' },
-    { name: 'ABIDA PARVEEN', title: 'Advocate High Court', cell: '0306-9191190', specialization: 'Family Law' },
-    { name: 'M.AKRAM @ RAHIB MANGRIO', title: 'Advocate', cell: '0312-3682470', specialization: 'Property Law' },
-    { name: 'NAEEM AHMED RIND', title: 'Advocate', cell: '0346-8979400', specialization: 'Civil Litigation' },
-    { name: 'NABI BUX SAND', title: 'Advocate High Court', cell: '0340-8781828', specialization: 'Criminal Defense' },
-    { name: 'AROON KUMAR', title: 'Advocate High Court', cell: '0333-7443521', specialization: 'Banking Law' },
-    { name: 'FAISAL AZIZ LAKHIAR', title: 'Advocate High Court', cell: '0301-2403472', specialization: 'Taxation Law' },
-    { name: 'SHAKEEL AHMED MANGI', title: 'Advocate High Court', cell: '0300-2136128', specialization: 'Labor Law' },
-    { name: 'ALLAH RAKHIO RAHUJO', title: 'Advocate', cell: '0346-8796336', specialization: 'Legal Documentation' },
-    { name: 'ABID AZAD JHATIAL', title: 'Advocate', cell: '0300-7007910', specialization: 'Appellate Law' }
-  ];
+  { name: 'IRFAN ALI RAHUJO', title: 'Advocate High Court', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'ZAFFAR HUSSAIN CHANDIO', title: 'Advocate High Court', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'M AKRAM @ RAHIB MANGRIO', title: 'Advocate High Court', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'AROON KUMAR', title: 'Advocate High Court', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'NAEEM AHMED RIND', title: 'Advocate High Court', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'NABI BUX SAND', title: 'Advocate High Court', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'SHAKEEL AHMED MANGI', title: 'Advocate High Court', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'ALLAH RAKHIYO RAHUJO', title: 'Advocate High Court', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'MUHAMMAD ACHAR JALBANI', title: 'Advocate High Court', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'PIRBHAT CHANDIO', title: 'Advocate', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'ABID ALI JATIYAL', title: 'Advocate', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'AFTAB AHMED JATOI', title: 'Advocate', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'AADIL ALI JATOI', title: 'Advocate', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'RASHID AHMED SAND', title: 'Advocate', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'DUA TAHIR', title: 'Advocate', cell: '03XX-XXXXXXX', specialization: 'Legal Services' },
+  { name: 'IQRA MUSTAFA BAREEJO', title: 'Advocate', cell: '03XX-XXXXXXX', specialization: 'Legal Services' }
+];
 
   const officeAddress = 'Office No. 3 Behind DIALDAS Club, Near High Court of Sindh, Hyderabad';
 
