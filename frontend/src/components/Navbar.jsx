@@ -4,6 +4,7 @@ import { FaMoon, FaSun, FaBars, FaTimes } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 
+
 // Import circular logo
 import logo from '../assets/logo.png';
 
@@ -18,7 +19,6 @@ const Navbar = () => {
     { name: t('aboutUs'), path: '/about' },
     { name: t('practiceAreas'), path: '/practice-areas' },
     { name: t('teams'), path: '/teams' },
-    { name: t('newsRoom'), path: '/news' },
     { name: t('careers'), path: '/careers' },
     { name: t('contactUs'), path: '/contact' },
   ];

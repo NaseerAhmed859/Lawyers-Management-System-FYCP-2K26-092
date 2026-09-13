@@ -30,6 +30,7 @@ const Sidebar = () => {
     { name: 'Dashboard', path: '/dashboard', icon: FaTachometerAlt },
     { name: 'My Profile', path: '/dashboard/profile', icon: FaUser },
     { name: 'All Cases', path: '/dashboard/cases', icon: FaBriefcase },
+    { name: 'Case File', path: '/dashboard/case-file', icon: FaCalendarAlt },
     { name: 'Case Diary', path: '/dashboard/case-diary', icon: FaCalendarAlt },
     { name: 'Reminders', path: '/dashboard/reminders', icon: FaBell },
     { name: 'Documents', path: '/dashboard/documents', icon: FaFileAlt },
@@ -41,7 +42,22 @@ const Sidebar = () => {
     navigate('/login');
   };
 
-  const isActive = (path) => location.pathname === path;
+   const isActive = (path) => {
+  // Case File ke liye - dynamic routes ko bhi handle kare
+  if (path === '/dashboard/case-file') {
+    return location.pathname.startsWith('/dashboard/case-file');
+  }
+  // Add Case ke liye
+  if (path === '/dashboard/add-case') {
+    return location.pathname === '/dashboard/add-case';
+  }
+  // Case Diary ke liye
+  if (path === '/dashboard/case-diary') {
+    return location.pathname === '/dashboard/case-diary';
+  }
+  // Baqi routes ke liye exact match
+  return location.pathname === path;
+};
 
   return (
     <>

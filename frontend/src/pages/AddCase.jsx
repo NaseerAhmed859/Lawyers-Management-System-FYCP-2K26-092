@@ -9,6 +9,9 @@ const AddCase = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   
+  // ✅ FIX: isCustomSubject ko alag se define karein
+  const [isCustomSubject, setIsCustomSubject] = useState(false);
+  
   const [caseData, setCaseData] = useState({
     courtName: '', caseNo: '', year: new Date().getFullYear(), caseCategory: 'Civil', 
     party1Role: 'Plaintiff', party1Name: '', party2Role: 'Defendant', party2Name: '',
@@ -16,24 +19,17 @@ const AddCase = () => {
     clientName: '', clientCell: '',
   });
 
-  const [hearings, setHearings] = useState([{ date: '', particulars: '' }]);
-
+  // ✅ YE LINE ADD KI GAI HAI (Jo missing thi aur error de rahi thi)
   const handleChange = (e) => setCaseData({ ...caseData, [e.target.name]: e.target.value });
-  const handleHearingChange = (index, e) => {
-    const newHearings = [...hearings];
-    newHearings[index][e.target.name] = e.target.value;
-    setHearings(newHearings);
-  };
-  const addHearingRow = () => setHearings([...hearings, { date: '', particulars: '' }]);
-  const removeHearingRow = (index) => setHearings(hearings.filter((_, i) => i !== index));
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newCase = { id: Date.now(), ...caseData, hearings: hearings.filter(h => h.date !== ''), status: 'Active', nextHearing: hearings.length > 0 ? hearings[hearings.length - 1].date : 'TBD' };
+    const newCase = { id: Date.now(), ...caseData, hearings: [], status: 'Active', nextHearing: 'TBD' };
     const existingCases = JSON.parse(localStorage.getItem('firmCases') || '[]');
     localStorage.setItem('firmCases', JSON.stringify([...existingCases, newCase]));
     alert('Case File Created Successfully!');
-    navigate('/dashboard/case-diary');
+    // newCase.id use karein
+navigate(`/dashboard/case-file/${newCase.id}`);// Note: Route case-file hai
   };
 
   return (
@@ -49,6 +45,7 @@ const AddCase = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Court & Case Details */}
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-bold text-gray-700 dark:text-gray-200 mb-4 flex items-center gap-2"><FaGavel /> {t('courtCaseDetails')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -103,13 +100,63 @@ const AddCase = () => {
                 </div>
               </div>
 
+              {/* ✅ UPDATED: Case Timeline & Subject Section */}
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-bold text-gray-700 dark:text-gray-200 mb-4 flex items-center gap-2"><FaCalendarAlt /> {t('caseTimeline')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  
+                  {/* ✅ Subject: Dropdown ya Custom Input */}
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('subjectTitle')}</label>
-                    <input type="text" name="subject" required onChange={handleChange} className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+                    
+                    {isCustomSubject ? (
+                      <div className="flex gap-2">
+                        <input 
+                          type="text" 
+                          name="subject" 
+                          required 
+                          value={caseData.subject}
+                          onChange={handleChange} 
+                          placeholder="Enter Subject"
+                          className="w-full p-2 border-2 border-primary-500 rounded dark:bg-gray-700 dark:border-primary-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                          autoFocus
+                        />
+                        <button 
+                          type="button" 
+                          onClick={() => {
+                            setIsCustomSubject(false);
+                            setCaseData({ ...caseData, subject: '' });
+                          }}
+                          className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 text-sm font-medium"
+                          title="Wapis dropdown par jayen"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ) : (
+                      <select 
+                        name="subject" 
+                        required 
+                        onChange={(e) => {
+                          if (e.target.value === 'Others') {
+                            setIsCustomSubject(true);
+                            setCaseData({ ...caseData, subject: '' });
+                          } else {
+                            setIsCustomSubject(false);
+                            setCaseData({ ...caseData, subject: e.target.value });
+                          }
+                        }} 
+                        value={caseData.subject}
+                        className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                      >
+                        <option value="">-- Select Subject --</option>
+                        <option value="Criminal Cases">Criminal Cases</option>
+                        <option value="Family Cases/Matters">Family Cases/Family Matters</option>
+                        <option value="Others">Others (Enter Subject)</option>
+                      </select>
+                    )}
                   </div>
+
                   <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('engagedOn')}</label><input type="date" name="engagedDate" onChange={handleChange} className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" /></div>
                   <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('filedOn')}</label><input type="date" name="filedDate" onChange={handleChange} className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" /></div>
                   <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('decidedOn')}</label><input type="date" name="decidedDate" onChange={handleChange} className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" /></div>
@@ -126,6 +173,7 @@ const AddCase = () => {
                 </div>
               </div>
 
+              {/* Client Info */}
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-bold text-gray-700 dark:text-gray-200 mb-4 flex items-center gap-2"><FaUser /> {t('clientInfo')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -134,35 +182,9 @@ const AddCase = () => {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-bold text-gray-700 dark:text-gray-200">{t('hearingHistory')}</h3>
-                  <button type="button" onClick={addHearingRow} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm"><FaPlus /> {t('addHearing')}</button>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300 dark:border-gray-600">
-                    <thead>
-                      <tr className="bg-gray-100 dark:bg-gray-700">
-                        <th className="border border-gray-300 dark:border-gray-600 p-2 text-left w-40">{t('dateOfHearing')}</th>
-                        <th className="border border-gray-300 dark:border-gray-600 p-2 text-left">{t('particularsOrder')}</th>
-                        <th className="border border-gray-300 dark:border-gray-600 p-2 w-16 text-center">{t('action')}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {hearings.map((hearing, index) => (
-                        <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                          <td className="border border-gray-300 dark:border-gray-600 p-1"><input type="date" name="date" value={hearing.date} onChange={(e) => handleHearingChange(index, e)} className="w-full p-1 bg-transparent outline-none dark:text-white" /></td>
-                          <td className="border border-gray-300 dark:border-gray-600 p-1"><input type="text" name="particulars" value={hearing.particulars} onChange={(e) => handleHearingChange(index, e)} className="w-full p-1 bg-transparent outline-none dark:text-white" /></td>
-                          <td className="border border-gray-300 dark:border-gray-600 p-1 text-center">{hearings.length > 1 && (<button type="button" onClick={() => removeHearingRow(index)} className="text-red-500 hover:text-red-700 p-1"><FaTrash /></button>)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
+              {/* Buttons */}
               <div className="flex justify-end gap-4 pb-8">
-                <button type="button" onClick={() => navigate('/dashboard/case-diary')} className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-400">{t('cancel')}</button>
+                <button type="button" onClick={() => navigate('/dashboard/case-file')} className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-400">{t('cancel')}</button>
                 <button type="submit" className="flex items-center gap-2 px-8 py-3 bg-primary-700 text-white rounded-lg font-bold shadow-lg hover:bg-primary-800 transition-all"><FaSave /> {t('saveCaseFile')}</button>
               </div>
             </form>

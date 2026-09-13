@@ -10,8 +10,11 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import LawyerDashboard from './pages/LawyerDashboard';
 import Profile from './pages/Profile';
+import CaseFile from './pages/CaseFile';
+import CaseFileDetails from './pages/CaseFileDetails';
 import CaseDiary from './pages/CaseDiary';
 import AddCase from './pages/AddCase';
+import Careers from './pages/Careers';
 import Teams from './pages/Teams';
 import Contact from './pages/Contact';
 
@@ -33,15 +36,21 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/practice-areas" element={<PracticeAreas />} />
-              <Route path="/teams" element={<Teams />} /> 
+              <Route path="/teams" element={<Teams />} />
+              <Route path="/careers" element={<Careers />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/dashboard" element={<ProtectedRoute><LawyerDashboard /></ProtectedRoute>} />
               <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              
+              {/* ✅ FIX: case-File → case-file (lowercase) aur CaseDiary → CaseFile */}
+              <Route path="/dashboard/case-file" element={<ProtectedRoute><CaseFile /></ProtectedRoute>} />
+              <Route path="/dashboard/today-hearings" element={<ProtectedRoute><CaseFile /></ProtectedRoute>} />
+              <Route path="/dashboard/cause-list" element={<ProtectedRoute><CaseFile /></ProtectedRoute>} />
               <Route path="/dashboard/case-diary" element={<ProtectedRoute><CaseDiary /></ProtectedRoute>} />
-              <Route path="/dashboard/today-hearings" element={<ProtectedRoute><CaseDiary /></ProtectedRoute>} />
-              <Route path="/dashboard/cause-list" element={<ProtectedRoute><CaseDiary /></ProtectedRoute>} />
+              <Route path="/dashboard/case-file/:id" element={<ProtectedRoute><CaseFileDetails /></ProtectedRoute>} />
+              
               <Route path="/dashboard/add-case" element={<ProtectedRoute><AddCase /></ProtectedRoute>} />
             </Routes>
           </Router>
