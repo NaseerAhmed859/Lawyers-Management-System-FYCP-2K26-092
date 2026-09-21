@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { FaCalendar, FaList, FaSearch, FaFilter, FaGavel, FaClock, FaFolderOpen, FaCheckCircle, FaTimes, FaPlus } from 'react-icons/fa';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import { useLanguage } from '../context/LanguageContext'; // ✅ Import added
+import { useLanguage } from '../context/LanguageContext';
 
 const CaseFile = () => {
-  const { t } = useLanguage(); // ✅ Translation hook added
+  const { t } = useLanguage();
   
   const [viewMode, setViewMode] = useState('list');
   const [searchTerm, setSearchTerm] = useState('');
@@ -75,45 +75,7 @@ const CaseFile = () => {
             </Link>
           </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border-l-4 border-blue-500">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('todaysHearings')}</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">06</p>
-                </div>
-                <FaClock className="text-3xl text-blue-500 opacity-50" />
-              </div>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border-l-4 border-yellow-500">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('tomorrow')}</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">04</p>
-                </div>
-                <FaCalendar className="text-3xl text-yellow-500 opacity-50" />
-              </div>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border-l-4 border-purple-500">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('pendingCases')}</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">82</p>
-                </div>
-                <FaFolderOpen className="text-3xl text-purple-500 opacity-50" />
-              </div>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border-l-4 border-green-500">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('decidedCases')}</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">37</p>
-                </div>
-                <FaCheckCircle className="text-3xl text-green-500 opacity-50" />
-              </div>
-            </div>
-          </div>
+          {/* ✅ Cards Delete Kar Diye Gaye - Yahan Kuch Nahi Hai */}
 
           {/* Search & Multiple Filters */}
           <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm mb-6">

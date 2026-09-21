@@ -3,7 +3,8 @@ import {
   FaBalanceScale, FaGavel, FaUsers, FaBuilding, FaLandmark, 
   FaFileContract, FaCheckCircle, FaStar, FaCalendarAlt, 
   FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaArrowRight,
-  FaShieldAlt, FaUserTie, FaBullhorn, FaQuoteLeft, FaLock
+  FaShieldAlt, FaUserTie, FaBullhorn, FaQuoteLeft, FaLock, 
+  FaHome, FaBriefcase // ✅ FaHome aur FaBriefcase add kiye
 } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -15,14 +16,44 @@ const heroImage = "https://images.unsplash.com/photo-1497366811353-6870744d04b2?
 const Home = () => {
   const { t } = useLanguage();
 
-  // Data Arrays
-  const services = [
-    { icon: FaGavel, title: 'Criminal Law', desc: 'Strong defense and representation in all criminal matters.' },
-    { icon: FaFileContract, title: 'Civil Law', desc: 'Resolving disputes related to contracts, torts, and property.' },
-    { icon: FaUsers, title: 'Family Law', desc: 'Compassionate handling of divorce, custody, and inheritance.' },
-    { icon: FaBuilding, title: 'Corporate Law', desc: 'Legal counsel for businesses, mergers, and compliance.' },
-    { icon: FaLandmark, title: 'Property Law', desc: 'Expert guidance in real estate transactions and disputes.' },
-    { icon: FaBalanceScale, title: 'Constitutional Law', desc: 'Protecting fundamental rights and constitutional remedies.' },
+  // ✅ Data Arrays (Icons ko string se actual component mein badal diya)
+  const practiceAreas = [
+    {
+      title: 'Criminal Law',
+      desc: 'Strong defense and representation in all criminal matters including bail hearings, trials, and appeals.',
+      icon: FaGavel,
+      color: 'bg-red-500'
+    },
+    {
+      title: 'Constitutional Law',
+      desc: 'Protecting fundamental rights and constitutional remedies. We handle writ petitions and constitutional matters.',
+      icon: FaLandmark,
+      color: 'bg-yellow-500'
+    },
+    {
+      title: 'Family Law',
+      desc: 'Compassionate handling of sensitive family matters including divorce, custody, inheritance, and maintenance.',
+      icon: FaUsers,
+      color: 'bg-purple-500'
+    },
+    {
+      title: 'Civil Law',
+      desc: 'We provide professional legal assistance in civil disputes and litigation including contracts, property, and torts.',
+      icon: FaBalanceScale,
+      color: 'bg-blue-500'
+    },
+    {
+      title: 'Rent Law',
+      desc: 'Expert guidance in tenancy matters, eviction proceedings, rent disputes, and lease agreements.',
+      icon: FaHome,
+      color: 'bg-green-500'
+    },
+    {
+      title: 'Service Matters Law',
+      desc: 'Representing clients in employment disputes, service tribunals, government service matters, and pension issues.',
+      icon: FaBriefcase,
+      color: 'bg-orange-500'
+    }
   ];
 
   const lawyers = [
@@ -56,20 +87,17 @@ const Home = () => {
           <div className="absolute top-0 right-0 w-1/2 h-full bg-accent-500/10 rounded-l-full blur-3xl"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              
-              {/* ✅ UPDATED HERO TEXT HIERARCHY */}
               <h1 className="font-serif text-4xl md:text-6xl font-bold leading-tight mb-2">
-  {t('heroTitle')}
-</h1>
-<h2 className="font-serif text-2xl md:text-4xl font-bold text-accent-400 mb-2">
-  {t('firmName')}
-</h2>
-<h3 className="font-serif text-base md:text-xl text-gray-300 mb-6 font-medium">
-  {t('advocateTitle')}
-</h3>
+                {t('heroTitle')}
+              </h1>
+              <h2 className="font-serif text-2xl md:text-4xl font-bold text-accent-400 mb-2">
+                {t('firmName')}
+              </h2>
+              <h3 className="font-serif text-base md:text-xl text-gray-300 mb-6 font-medium">
+                {t('advocateTitle')}
+              </h3>
 
-{/* ✅ Paragraph delete ho gaya, ab seedha buttons hain 👇 */}
-<div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/login" className="px-8 py-4 bg-accent-500 hover:bg-accent-600 text-gray-900 font-bold rounded-lg shadow-lg hover:shadow-accent-500/50 transition-all flex items-center justify-center gap-2">
                   {t('bookAppointment')} <FaCalendarAlt />
                 </Link>
@@ -111,14 +139,16 @@ const Home = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary-800 dark:text-white mb-4">{t('ourLegalServices')}</h2>
             <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">{t('servicesDesc')}</p>
+            
+            {/* ✅ FIX: services ki jagah practiceAreas use kiya, aur service ki jagah area */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, idx) => (
+              {practiceAreas.map((area, idx) => (
                 <div key={idx} className="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 group hover:-translate-y-1">
                   <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-600 transition-colors mx-auto">
-                    <service.icon className="text-3xl text-primary-700 dark:text-accent-400 group-hover:text-white" />
+                    <area.icon className="text-3xl text-primary-700 dark:text-accent-400 group-hover:text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{service.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">{service.desc}</p>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{area.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-400">{area.desc}</p>
                 </div>
               ))}
             </div>

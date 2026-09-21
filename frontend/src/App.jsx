@@ -2,6 +2,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
+import PetitionCourt from './pages/PetitionCourt';
+import CriminalBailApplication from './pages/CriminalBailApplication';
+import CriminalAppeal from './pages/CriminalAppeal';
+import LawyerProfile from './pages/LawyerProfile';
+
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -13,8 +18,10 @@ import Profile from './pages/Profile';
 import CaseFile from './pages/CaseFile';
 import CaseFileDetails from './pages/CaseFileDetails';
 import CaseDiary from './pages/CaseDiary';
+import Library from './pages/Library';
 import AddCase from './pages/AddCase';
 import Careers from './pages/Careers';
+import Reminders from './pages/Reminders';
 import Teams from './pages/Teams';
 import Contact from './pages/Contact';
 
@@ -43,15 +50,20 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/dashboard" element={<ProtectedRoute><LawyerDashboard /></ProtectedRoute>} />
               <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-              
+
               {/* ✅ FIX: case-File → case-file (lowercase) aur CaseDiary → CaseFile */}
               <Route path="/dashboard/case-file" element={<ProtectedRoute><CaseFile /></ProtectedRoute>} />
               <Route path="/dashboard/today-hearings" element={<ProtectedRoute><CaseFile /></ProtectedRoute>} />
               <Route path="/dashboard/cause-list" element={<ProtectedRoute><CaseFile /></ProtectedRoute>} />
               <Route path="/dashboard/case-diary" element={<ProtectedRoute><CaseDiary /></ProtectedRoute>} />
               <Route path="/dashboard/case-file/:id" element={<ProtectedRoute><CaseFileDetails /></ProtectedRoute>} />
-              
+              <Route path="/dashboard/Library" element={<ProtectedRoute><Library /></ProtectedRoute>} />
               <Route path="/dashboard/add-case" element={<ProtectedRoute><AddCase /></ProtectedRoute>} />
+              <Route path="/dashboard/petition-court/:id" element={<PetitionCourt />} />
+              <Route path="/dashboard/criminal-bail-application/:id" element={<CriminalBailApplication />} />
+              <Route path="/dashboard/criminal-appeal/:id" element={<CriminalAppeal />} />
+              <Route path="/team/:id" element={<LawyerProfile />} />
+              <Route path="/dashboard/reminders" element={<Reminders />} />
             </Routes>
           </Router>
         </AuthProvider>

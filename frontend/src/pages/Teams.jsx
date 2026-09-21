@@ -1,4 +1,5 @@
-import { FaBalanceScale, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaBalanceScale, FaPhone, FaEnvelope, FaMapMarkerAlt, FaEye } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -30,23 +31,24 @@ const Teams = () => {
   };
 
   // Team Members Data (objectPosition har photo ke liye set hai)
+  // ✅ Jin lawyers ki details hain unke IDs add kiye hain
   const teamMembers = [
-    { name: t('Irfan Rahujo'), title: t('Adv High Court'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: irfanImg, objectPos: 'center 25%' },
-    { name: t('Zaffar Hussain Chandio'), title: t('Adv High Court'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: zafarImg, objectPos: 'center 20%' },
-    { name: t('M Akram Rahab Mangrio'), title: t('Adv High Court'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: null, objectPos: 'center 20%' },
-    { name: t('Aroon Kumar'), title: t('Adv High Court'), cell: '0333-7443521', specialization: t('legalServices'), image: aroonImg, objectPos: 'center 10%' },
-    { name: t('Naeem Ahmed Rind'), title: t('Adv High Court'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: naeemImg, objectPos: 'center 20%' },
-    { name: t('Nabi Bux Sand'), title: t('Adv High Court'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: null, objectPos: 'center 20%' },
-    { name: t('Shakeel Ahmed Mangi'), title: t('Adv High Court'), cell: '0300-2136128', specialization: t('legalServices'), image: shakeelImg, objectPos: 'center 15%' },
-    { name: t('Allah Rakhio Rahujo'), title: t('Adv High Court'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: null, objectPos: 'center 20%' },
-    { name: t('Muhammad Achar Jalbani'), title: t('Adv High Court' ), cell: '0325-8381548', specialization: t('legalServices'), image: acharImg, objectPos: 'center 20%' },
-    { name: t('Pirbhat Chandio'), title: t('Advocate'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: pirbhatImg, objectPos: 'center 25%' },
-    { name: t('Abid Ali Jhatial'), title: t('Adv High Court'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: null, objectPos: 'center 20%' },
-    { name: t('Aftab Ahmed Jatio'), title: t('Advocate'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: aftabImg, objectPos: 'center 20%' },
-    { name: t('Aadil Ali Jatio'), title: t('Advocate'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: aadilImg, objectPos: 'center 25%' },
-    { name: t('Rashid Ahmed Sand'), title: t('Advocate'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: null, objectPos: 'center 20%' },
-    { name: t('Dua Tahir'), title: t('Advocate'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: duaImg, objectPos: 'center 25%' },
-    { name: t('Iqra Mustafa Bareejo'), title: t('Advocte'), cell: '03XX-XXXXXXX', specialization: t('legalServices'), image: iqraImg, objectPos: 'center 20%' }
+    { id: 1, name: t('Irfan Rahujo'), title: t('Adv High Court'), cell: '0346-2988615', specialization: t('legalServices'), image: irfanImg, objectPos: 'center 25%', hasProfile: false },
+    { id: 2, name: t('Zaffar Hussain Chandio'), title: t('Adv High Court'), cell: '0302-3058857', specialization: t('legalServices'), image: zafarImg, objectPos: 'center 20%', hasProfile: false },
+    { id: 3, name: t('M Akram Rahab Mangrio'), title: t('Adv High Court'), cell: '0312-3682470', specialization: t('legalServices'), image: null, objectPos: 'center 20%', hasProfile: false },
+    { id: 4, name: t('Aroon Kumar'), title: t('Adv High Court'), cell: '0333-7443521', specialization: t('legalServices'), image: aroonImg, objectPos: 'center 10%', hasProfile: true }, // ✅
+    { id: 5, name: t('Naeem Ahmed Rind'), title: t('Adv High Court'), cell: '0346-8979400', specialization: t('legalServices'), image: naeemImg, objectPos: 'center 20%', hasProfile: true }, // ✅
+    { id: 6, name: t('Nabi Bux Sand'), title: t('Adv High Court'), cell: '0340-8781828', specialization: t('legalServices'), image: null, objectPos: 'center 20%', hasProfile: false },
+    { id: 7, name: t('Shakeel Ahmed Mangi'), title: t('Adv High Court'), cell: '0300-2136128', specialization: t('legalServices'), image: shakeelImg, objectPos: 'center 15%', hasProfile: false },
+    { id: 8, name: t('Allah Rakhio @ AR Rahujo'), title: t('Adv High Court'), cell: '0346-8796336', specialization: t('legalServices'), image: null, objectPos: 'center 20%', hasProfile: true }, // ✅
+    { id: 9, name: t('Muhammad Achar Jalbani'), title: t('Adv High Court' ), cell: '0325-8381548', specialization: t('legalServices'), image: acharImg, objectPos: 'center 20%', hasProfile: false },
+    { id: 10, name: t('Pirbhat Chandio'), title: t('Advocate'), cell: '0330-8138040', specialization: t('legalServices'), image: pirbhatImg, objectPos: 'center 25%', hasProfile: true }, // ✅ (I Pirbhat Amir)
+    { id: 11, name: t('Abid Ali Jhatial'), title: t('Adv High Court'), cell: '0300-7007910', specialization: t('legalServices'), image: null, objectPos: 'center 20%', hasProfile: false },
+    { id: 12, name: t('Aftab Ahmed Jatio'), title: t('Advocate'), cell: '0303-7668823', specialization: t('legalServices'), image: aftabImg, objectPos: 'center 20%', hasProfile: true }, // ✅
+    { id: 13, name: t('Aadil Ali Jatio'), title: t('Advocate'), cell: '0327-8316476', specialization: t('legalServices'), image: aadilImg, objectPos: 'center 25%', hasProfile: true }, // ✅ (Adil Hussain)
+    { id: 14, name: t('Abdul Rasheed Saand'), title: t('Advocate'), cell: '0346-0257121', specialization: t('legalServices'), image: null, objectPos: 'center 20%', hasProfile: false },
+    { id: 15, name: t('Dua Tahir'), title: t('Advocate'), cell: '0303-3383767', specialization: t('legalServices'), image: duaImg, objectPos: 'center 25%', hasProfile: false },
+    { id: 16, name: t('Iqra Mustafa Bareejo'), title: t('Advocte'), cell: '0301-5529993', specialization: t('legalServices'), image: iqraImg, objectPos: 'center 20%', hasProfile: false },
   ];
 
   return (
@@ -106,36 +108,52 @@ const Teams = () => {
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {teamMembers.map((member, idx) => (
-                <div key={idx} className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700 flex items-center gap-6 hover:-translate-y-1">
+              {teamMembers.map((member) => (
+                <div key={member.id} className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700 hover:-translate-y-1 relative">
                   
-                  {/* Professional Circular Image with object-position */}
-                  <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-accent-400 flex-shrink-0 bg-gray-200 shadow-sm">
-                    {member.image ? (
-                      <img 
-                        src={member.image} 
-                        alt={member.name} 
-                        className="w-full h-full object-cover"
-                        style={{ objectPosition: member.objectPos || 'center 20%' }}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-primary-100 text-primary-700 font-bold text-2xl">
-                        {member.name.charAt(0)}
-                      </div>
-                    )}
-                  </div>
+                  <div className="flex items-start gap-6">
+                    {/* Professional Circular Image with object-position */}
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-accent-400 flex-shrink-0 bg-gray-200 shadow-sm">
+                      {member.image ? (
+                        <img 
+                          src={member.image} 
+                          alt={member.name} 
+                          className="w-full h-full object-cover"
+                          style={{ objectPosition: member.objectPos || 'center 20%' }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-primary-100 text-primary-700 font-bold text-2xl">
+                          {member.name.charAt(0)}
+                        </div>
+                      )}
+                    </div>
 
-                  {/* Member Info */}
-                  <div className="flex-grow min-w-0">
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-1 truncate">
-                      {member.name}
-                    </h3>
-                    <p className="text-primary-600 dark:text-accent-400 text-sm font-medium mb-2">
-                      {member.title}
-                    </p>
-                    <p className="text-gray-500 dark:text-gray-400 text-xs flex items-center gap-1">
-                      <FaPhone className="text-accent-500 text-[10px]" /> {member.cell}
-                    </p>
+                    {/* Member Info */}
+                    <div className="flex-grow min-w-0">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-1 truncate">
+                        {member.name}
+                      </h3>
+                      <p className="text-primary-600 dark:text-accent-400 text-sm font-medium mb-2">
+                        {member.title}
+                      </p>
+                      <p className="text-gray-500 dark:text-gray-400 text-xs flex items-center gap-1 mb-3">
+                        <FaPhone className="text-accent-500 text-[10px]" /> {member.cell}
+                      </p>
+                      
+                      {/* ✅ View Profile Button - Right Side Bottom */}
+                      {member.hasProfile ? (
+                        <Link 
+                          to={`/team/${member.id}`}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
+                        >
+                          <FaEye /> View Profile
+                        </Link>
+                      ) : (
+                        <span className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm font-medium rounded-lg cursor-not-allowed">
+                          <FaEye /> Coming Soon
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

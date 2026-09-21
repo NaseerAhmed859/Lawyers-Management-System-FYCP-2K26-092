@@ -9,7 +9,6 @@ const AddCase = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   
-  // ✅ FIX: isCustomSubject ko alag se define karein
   const [isCustomSubject, setIsCustomSubject] = useState(false);
   
   const [caseData, setCaseData] = useState({
@@ -19,7 +18,6 @@ const AddCase = () => {
     clientName: '', clientCell: '',
   });
 
-  // ✅ YE LINE ADD KI GAI HAI (Jo missing thi aur error de rahi thi)
   const handleChange = (e) => setCaseData({ ...caseData, [e.target.name]: e.target.value });
   
   const handleSubmit = (e) => {
@@ -27,9 +25,20 @@ const AddCase = () => {
     const newCase = { id: Date.now(), ...caseData, hearings: [], status: 'Active', nextHearing: 'TBD' };
     const existingCases = JSON.parse(localStorage.getItem('firmCases') || '[]');
     localStorage.setItem('firmCases', JSON.stringify([...existingCases, newCase]));
+    
     alert('Case File Created Successfully!');
-    // newCase.id use karein
-navigate(`/dashboard/case-file/${newCase.id}`);// Note: Route case-file hai
+    
+    // ✅ Navigate to specific page based on selected Subject
+    if (caseData.subject === 'Petition Court') {
+      navigate(`/dashboard/petition-court/${newCase.id}`);
+    } else if (caseData.subject === 'Criminal Bail Application') {
+      navigate(`/dashboard/criminal-bail-application/${newCase.id}`);
+    } else if (caseData.subject === 'Criminal Appeal (Cr. Appeal)') {
+      navigate(`/dashboard/criminal-appeal/${newCase.id}`);
+    } else {
+      // Default navigation for other cases
+      navigate(`/dashboard/case-file/${newCase.id}`);
+    }
   };
 
   return (
@@ -100,12 +109,12 @@ navigate(`/dashboard/case-file/${newCase.id}`);// Note: Route case-file hai
                 </div>
               </div>
 
-              {/* ✅ UPDATED: Case Timeline & Subject Section */}
+              {/* Case Timeline & Subject Section */}
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-bold text-gray-700 dark:text-gray-200 mb-4 flex items-center gap-2"><FaCalendarAlt /> {t('caseTimeline')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   
-                  {/* ✅ Subject: Dropdown ya Custom Input */}
+                  {/* ✅ UPDATED: Subject Dropdown with New Options */}
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('subjectTitle')}</label>
                     
@@ -152,6 +161,9 @@ navigate(`/dashboard/case-file/${newCase.id}`);// Note: Route case-file hai
                         <option value="">-- Select Subject --</option>
                         <option value="Criminal Cases">Criminal Cases</option>
                         <option value="Family Cases/Matters">Family Cases/Family Matters</option>
+                        <option value="Petition Court">Petition Court</option>
+                        <option value="Criminal Bail Application">Criminal Bail Application</option>
+                        <option value="Criminal Appeal (Cr. Appeal)">Criminal Appeal (Cr. Appeal)</option>
                         <option value="Others">Others (Enter Subject)</option>
                       </select>
                     )}

@@ -1,54 +1,52 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useContext } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // Page load hone par check karein ke user pehle se login hai ya nahi
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('currentUser');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
-  useEffect(() => {
-    // Check if user is logged in
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
-  }, []);
-
+  // 1. Sign Up Function
   const signup = (userData) => {
-    // Save to localStorage (demo purposes)
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    
-    // Check if email already exists
+    const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
     if (users.find(u => u.email === userData.email)) {
-      throw new Error('Email already registered');
+      return { success: false, message: 'Ye email pehle se registered hai!' };
     }
-
     users.push(userData);
-    localStorage.setItem('users', JSON.stringify(users));
-    localStorage.setItem('user', JSON.stringify(userData));
-    setUser(userData);
+    localStorage.setItem('registeredUsers', JSON.stringify(users));
+    return { success: true, message: 'Registration successful! Ab login karein.' };
   };
 
+  // 2. Login Function
   const login = (email, password) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find(u => u.email === email && u.password === password);
-    
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-      setUser(user);
-      return user;
+    const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    // Ek default test user bhi add kar rahe hain testing ke liye
+    const allUsers = [
+      ...users, 
+      { name: 'Test Lawyer', email: 'test@lms.com', password: '123456' }
+    ];
+
+    const foundUser = allUsers.find(u => u.email === email && u.password === password);
+
+    if (foundUser) {
+      setUser(foundUser);
+      localStorage.setItem('currentUser', JSON.stringify(foundUser)); // Navbar ke liye save kiya
+      return { success: true };
     }
-    throw new Error('Invalid email or password');
+    return { success: false, message: 'Galat email ya password!' };
   };
 
+  // 3. Logout Function
   const logout = () => {
-    localStorage.removeItem('user');
     setUser(null);
+    localStorage.removeItem('currentUser'); // Navbar se user hata diya
   };
 
   return (
-    <AuthContext.Provider value={{ user, signup, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );
