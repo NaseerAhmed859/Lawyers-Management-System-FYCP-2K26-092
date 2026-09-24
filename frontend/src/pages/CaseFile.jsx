@@ -66,10 +66,6 @@ const CaseFile = () => {
         <div className="flex-1 lg:ml-64 p-6">
           {/* Header with New Case Button */}
           <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white font-serif">{t('caseDiary')}</h1>
-              <p className="text-gray-600 dark:text-gray-400">{t('manageHearings')}</p>
-            </div>
             <Link to="/dashboard/add-case" className="flex items-center gap-2 px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-lg shadow-lg transition-all">
               <FaPlus /> {t('newCaseFile')}
             </Link>

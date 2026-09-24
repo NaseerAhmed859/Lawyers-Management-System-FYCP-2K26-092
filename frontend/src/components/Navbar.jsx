@@ -35,8 +35,8 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
             <img src={logo} alt="LMS Logo" className="h-12 w-12 border-2 border-primary-600 dark:border-accent-400 rounded-full shadow-md" />
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-primary-800 dark:text-white">{t('lawyersManagementSystem')}</h1>
-              <p className="text-xs text-gray-600 dark:text-gray-400 font-medium tracking-wide">LMS</p>
+              <h1 className="text-xl font-bold text-primary-800 dark:text-white">{t('CASE MANAGEMENT SYSTEM')}</h1>
+              <p className="text-xs text-gray-600 dark:text-gray-400 font-medium tracking-wide">MEER AHMED MANGRIO & ASSOCIATES</p>
             </div>
           </Link>
 

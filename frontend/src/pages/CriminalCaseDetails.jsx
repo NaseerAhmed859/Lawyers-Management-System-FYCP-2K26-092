@@ -1,23 +1,37 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaUpload, FaFilePdf, FaFileImage, FaTrash, FaPlus, FaFileAlt, FaEye, FaEdit } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 
-const CriminalAppeal = () => {
-  const { id } = useParams();
+const CriminalCaseDetails = ({ caseData }) => {
   const navigate = useNavigate();
+  const id = caseData.id;
+
+  const [criminalCategory, setCriminalCategory] = useState('');
+  const [isCustomCriminal, setIsCustomCriminal] = useState(false);
+  const [activeCriminalCategory, setActiveCriminalCategory] = useState('');
   
-  const [caseData, setCaseData] = useState(null);
-  const [appealCategory, setAppealCategory] = useState('');
-  const [isCustomAppeal, setIsCustomAppeal] = useState(false);
-  const [activeAppealCategory, setActiveAppealCategory] = useState('');
-  
-  const [appealDynamicDocs, setAppealDynamicDocs] = useState({
-    'Memo': [],
-    'Copy against the order': [],
-    'Statements of PWs along with exhibits': [],
-    'Statements of accused judgement': []
+  // All Criminal Document Types in one dynamic object
+  const [criminalDynamicDocs, setCriminalDynamicDocs] = useState({
+    'FIR': [],
+    'Challan (Interim)': [],
+    'Challan (Final)': [],
+    'Challan (Supplementary)': [],
+    'Challan (Other)': [],
+    'Musheernama (Place of Incident)': [],
+    'Musheernama (Injuries)': [],
+    'Musheernama (Assets)': [],
+    'Musheernama (Remand Article)': [],
+    'Musheernama (Last Wearing)': [],
+    'Musheernama (Other)': [],
+    'Inquest Report': [],
+    'Inquest Report (Other)': [],
+    'Medical Report (Provisional)': [],
+    'Medical Report (Final)': [],
+    'Post Mortem Report': [],
+    'DNA Report': [],
+    'Other General Files': []
   });
   
   const [newDocName, setNewDocName] = useState('');
@@ -25,29 +39,20 @@ const CriminalAppeal = () => {
   const [searchDoc, setSearchDoc] = useState('');
 
   useEffect(() => {
-    const cases = JSON.parse(localStorage.getItem('firmCases') || '[]');
-    const foundCase = cases.find(c => c.id.toString() === id);
-    if (foundCase) {
-      setCaseData(foundCase);
-      const savedFiles = JSON.parse(localStorage.getItem(`case_${id}_files`) || '{}');
-      
-      if (savedFiles.appealDynamicDocs) setAppealDynamicDocs(savedFiles.appealDynamicDocs);
-      
-      if (savedFiles.appealCategory) {
-        if (savedFiles.appealCategory === 'Others') {
-          setIsCustomAppeal(true);
-          setAppealCategory('');
-        } else {
-          setIsCustomAppeal(false);
-          setAppealCategory(savedFiles.appealCategory);
-          setActiveAppealCategory(savedFiles.appealCategory);
-        }
+    const savedFiles = JSON.parse(localStorage.getItem(`case_${id}_files`) || '{}');
+    if (savedFiles.criminalDynamicDocs) setCriminalDynamicDocs(savedFiles.criminalDynamicDocs);
+    
+    if (savedFiles.criminalCategory) {
+      if (savedFiles.criminalCategory === 'Others') {
+        setIsCustomCriminal(true);
+        setCriminalCategory('');
+      } else {
+        setIsCustomCriminal(false);
+        setCriminalCategory(savedFiles.criminalCategory);
+        setActiveCriminalCategory(savedFiles.criminalCategory);
       }
-    } else {
-      alert('Case not found!');
-      navigate('/dashboard/case-file');
     }
-  }, [id, navigate]);
+  }, [id]);
 
   const saveFiles = (key, files) => {
     const allFiles = JSON.parse(localStorage.getItem(`case_${id}_files`) || '{}');
@@ -55,17 +60,17 @@ const CriminalAppeal = () => {
     localStorage.setItem(`case_${id}_files`, JSON.stringify(allFiles));
   };
 
-  const handleAppealCategoryChange = (e) => {
+  const handleCriminalCategoryChange = (e) => {
     const val = e.target.value;
     if (val === 'Others') {
-      setIsCustomAppeal(true);
-      setAppealCategory('');
-      setActiveAppealCategory('');
+      setIsCustomCriminal(true);
+      setCriminalCategory('');
+      setActiveCriminalCategory('');
     } else {
-      setIsCustomAppeal(false);
-      setAppealCategory(val);
-      setActiveAppealCategory(val);
-      saveFiles('appealCategory', val);
+      setIsCustomCriminal(false);
+      setCriminalCategory(val);
+      setActiveCriminalCategory(val);
+      saveFiles('criminalCategory', val);
     }
   };
 
@@ -89,34 +94,32 @@ const CriminalAppeal = () => {
       url: URL.createObjectURL(newDocFile)
     };
 
-    const currentList = appealDynamicDocs[activeAppealCategory] || [];
+    const currentList = criminalDynamicDocs[activeCriminalCategory] || [];
     const updatedList = [...currentList, newDoc];
-    const updatedDocs = { ...appealDynamicDocs, [activeAppealCategory]: updatedList };
+    const updatedDocs = { ...criminalDynamicDocs, [activeCriminalCategory]: updatedList };
 
-    setAppealDynamicDocs(updatedDocs);
-    saveFiles('appealDynamicDocs', updatedDocs);
+    setCriminalDynamicDocs(updatedDocs);
+    saveFiles('criminalDynamicDocs', updatedDocs);
 
     setNewDocName('');
     setNewDocFile(null);
-    const fileInput = document.getElementById('appeal-dynamic-file-input');
+    const fileInput = document.getElementById('criminal-dynamic-file-input');
     if (fileInput) fileInput.value = '';
   };
 
   const handleDeleteDynamicDoc = (docId) => {
-    const currentList = appealDynamicDocs[activeAppealCategory] || [];
+    const currentList = criminalDynamicDocs[activeCriminalCategory] || [];
     const updatedList = currentList.filter(doc => doc.id !== docId);
-    const updatedDocs = { ...appealDynamicDocs, [activeAppealCategory]: updatedList };
+    const updatedDocs = { ...criminalDynamicDocs, [activeCriminalCategory]: updatedList };
 
-    setAppealDynamicDocs(updatedDocs);
-    saveFiles('appealDynamicDocs', updatedDocs);
+    setCriminalDynamicDocs(updatedDocs);
+    saveFiles('criminalDynamicDocs', updatedDocs);
   };
 
   const getFileIcon = (type) => {
     if (type && type.includes('pdf')) return <FaFilePdf className="text-red-500 text-xl" />;
     return <FaFileImage className="text-blue-500 text-xl" />;
   };
-
-  if (!caseData) return <div className="p-6">Loading...</div>;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -126,7 +129,7 @@ const CriminalAppeal = () => {
         <div className="flex-1 lg:ml-64 p-6 overflow-y-auto h-[calc(100vh-4rem)]">
           <div className="max-w-6xl mx-auto">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">Criminal Appeal (Cr. Appeal)</h1>
+              <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">Criminal Case Details</h1>
               <p className="text-gray-600 dark:text-gray-400">{caseData.caseNo}/{caseData.year} - {caseData.party1Name} VS {caseData.party2Name}</p>
             </div>
 
@@ -139,32 +142,46 @@ const CriminalAppeal = () => {
               </div>
             </div>
 
-            {/* Appeal Document Upload Section */}
+            {/* Criminal Document Upload Section - Dynamic Pattern */}
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6 border border-gray-200 dark:border-gray-700">
               <h3 className="text-lg font-bold text-gray-700 dark:text-gray-200 mb-4 flex items-center gap-2">
                 <FaPlus /> Select Category of Document
               </h3>
 
-              {isCustomAppeal ? (
+              {isCustomCriminal ? (
                 <div className="flex gap-2">
-                  <input type="text" value={appealCategory} onChange={(e) => { setAppealCategory(e.target.value); saveFiles('customAppealCategory', e.target.value); }} placeholder="Enter your custom document category..." className="w-full p-2 border-2 border-primary-500 rounded dark:bg-gray-700 dark:border-primary-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500" autoFocus />
-                  <button type="button" onClick={() => { setIsCustomAppeal(false); setAppealCategory(''); saveFiles('appealCategory', ''); }} className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 text-sm font-medium">✕</button>
+                  <input type="text" value={criminalCategory} onChange={(e) => { setCriminalCategory(e.target.value); saveFiles('customCriminalCategory', e.target.value); }} placeholder="Enter your custom document category..." className="w-full p-2 border-2 border-primary-500 rounded dark:bg-gray-700 dark:border-primary-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500" autoFocus />
+                  <button type="button" onClick={() => { setIsCustomCriminal(false); setCriminalCategory(''); saveFiles('criminalCategory', ''); }} className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 text-sm font-medium">✕</button>
                 </div>
               ) : (
-                <select value={appealCategory} onChange={handleAppealCategoryChange} className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <select value={criminalCategory} onChange={handleCriminalCategoryChange} className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                   <option value="">-- Select Category of Document --</option>
-                  <option value="Memo">Memo</option>
-                  <option value="Copy against the order">Copy against the order</option>
-                  <option value="Statements of PWs along with exhibits">Statements of PWs along with exhibits</option>
-                  <option value="Statements of accused judgement">Statements of accused judgement</option>
+                  <option value="FIR">FIR</option>
+                  <option value="Challan (Interim)">Challan (Interim)</option>
+                  <option value="Challan (Final)">Challan (Final)</option>
+                  <option value="Challan (Supplementary)">Challan (Supplementary)</option>
+                  <option value="Challan (Other)">Challan (Other)</option>
+                  <option value="Musheernama (Place of Incident)">Musheernama (Place of Incident)</option>
+                  <option value="Musheernama (Injuries)">Musheernama (Injuries)</option>
+                  <option value="Musheernama (Assets)">Musheernama (Assets)</option>
+                  <option value="Musheernama (Remand Article)">Musheernama (Remand Article)</option>
+                  <option value="Musheernama (Last Wearing)">Musheernama (Last Wearing)</option>
+                  <option value="Musheernama (Other)">Musheernama (Other)</option>
+                  <option value="Inquest Report">Inquest Report</option>
+                  <option value="Inquest Report (Other)">Inquest Report (Other)</option>
+                  <option value="Medical Report (Provisional)">Medical Report (Provisional)</option>
+                  <option value="Medical Report (Final)">Medical Report (Final)</option>
+                  <option value="Post Mortem Report">Post Mortem Report</option>
+                  <option value="DNA Report">DNA Report</option>
+                  <option value="Other General Files">Other General Files</option>
                   <option value="Others">Others (Custom Input)</option>
                 </select>
               )}
 
-              {activeAppealCategory && !isCustomAppeal && (
+              {activeCriminalCategory && !isCustomCriminal && (
                 <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                   <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
-                    <FaUpload /> Upload Documents for: <span className="text-primary-600 ml-2">{activeAppealCategory}</span>
+                    <FaUpload /> Upload Documents for: <span className="text-primary-600 ml-2">{activeCriminalCategory}</span>
                   </h4>
 
                   <div className="flex flex-col md:flex-row gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
@@ -174,7 +191,7 @@ const CriminalAppeal = () => {
                     </div>
                     <div className="flex-1">
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Select File</label>
-                      <input id="appeal-dynamic-file-input" type="file" onChange={(e) => setNewDocFile(e.target.files[0])} className="w-full p-2 border rounded dark:bg-gray-600 dark:border-gray-500 dark:text-white text-sm" />
+                      <input id="criminal-dynamic-file-input" type="file" onChange={(e) => setNewDocFile(e.target.files[0])} className="w-full p-2 border rounded dark:bg-gray-600 dark:border-gray-500 dark:text-white text-sm" />
                     </div>
                     <div className="flex items-end">
                       <button onClick={handleAddDynamicDoc} className="w-full md:w-auto px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium flex items-center justify-center gap-2 transition-colors">
@@ -193,13 +210,13 @@ const CriminalAppeal = () => {
                         className="w-full p-3 pl-10 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
                       />
                       <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                        
+                        🔍
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    {appealDynamicDocs[activeAppealCategory]?.filter((doc) => 
+                    {criminalDynamicDocs[activeCriminalCategory]?.filter((doc) => 
                       doc.name.toLowerCase().includes(searchDoc.toLowerCase()) ||
                       doc.fileName.toLowerCase().includes(searchDoc.toLowerCase())
                     ).length === 0 ? (
@@ -208,11 +225,11 @@ const CriminalAppeal = () => {
                         <p className="text-gray-500 dark:text-gray-400">
                           {searchDoc 
                             ? `No documents found matching "${searchDoc}"` 
-                            : `No documents added yet for ${activeAppealCategory}. Use the form above to add documents.`}
+                            : `No documents added yet for ${activeCriminalCategory}. Use the form above to add documents.`}
                         </p>
                       </div>
                     ) : (
-                      appealDynamicDocs[activeAppealCategory]
+                      criminalDynamicDocs[activeCriminalCategory]
                         .filter((doc) => 
                           doc.name.toLowerCase().includes(searchDoc.toLowerCase()) ||
                           doc.fileName.toLowerCase().includes(searchDoc.toLowerCase())
@@ -284,4 +301,4 @@ const CriminalAppeal = () => {
   );
 };
 
-export default CriminalAppeal;
+export default CriminalCaseDetails;
